@@ -1,0 +1,182 @@
+---
+
+---
+
+<body>
+  <button
+    id="menu-btn"
+    class="w-20 h-20 sm:w-10 sm:h-10 md:w-30 md:h-30 bg-contain bg-no-repeat bg-center cursor-pointer fixed right-0 top-0 m-2 z-50"
+  >
+    <svg viewBox="0 0 75 75" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle id="menu-circle" cx="37.5" cy="37.5" r="37.5" fill="white"
+      ></circle>
+      <path
+        id="menu-path"
+        d="M45.6812 59.9197C44.1041 59.9252 42.7896 58.6405 42.7951 57.0635L43.0517 44.899L43.0512 44.8089C39.2127 40.9405 38.5778 35.3193 41.6383 32.2588L40.7618 31.3823C37.2385 34.9056 37.8629 41.2628 42.1248 45.6143L39.2134 48.4955C39.2134 48.4955 26.4488 61.2299 26.4338 61.2449C25.4621 62.005 24.0499 61.9363 23.1281 61.0146C22.1458 60.0323 22.1513 58.4553 23.1068 57.4998C23.1366 57.4699 33.9902 46.6164 33.9902 46.6164L33.2342 45.8007L21.0966 57.9082C20.1262 58.8786 18.549 58.854 17.5667 57.8717C16.5845 56.8895 16.5899 55.3124 17.5603 54.342L29.653 42.2493L28.8068 41.4031L19.3269 50.9132C18.3565 51.8836 16.7793 51.859 15.797 50.8768C14.8148 49.8945 14.8202 48.3175 15.7757 47.362L25.2707 37.867L24.4849 37.0812L19.3942 42.2021C18.4238 43.1725 16.8466 43.148 15.8643 42.1657C14.8821 41.1835 14.8875 39.6064 15.8579 38.636C32.0412 22.4527 32.0412 22.4527 32.4294 22.0646C34.4001 20.0939 37.0997 19.4494 39.0726 20.3175L55.1777 4.26598C55.1777 4.26598 59.2307 5.86983 62.9559 9.21573C66.6811 12.5616 68.6128 16.2868 68.6128 16.2868L50.9702 33.0213C51.2136 33.5335 51.4423 34.0906 51.626 34.6624C52.7738 38.169 52.5395 41.6372 51.2319 43.9723C51.0282 45.0525 48.4027 57.9236 48.4027 57.9236C48.139 59.0334 47.003 59.9277 45.6812 59.9197Z"
+        fill="black"></path>
+    </svg>
+  </button>
+
+  <div
+    id="menu-overlay"
+    class="fixed inset-0 bg-black z-40 invisible
+           flex items-center justify-center"
+  >
+    <nav class="flex flex-col text-white text-5xl gap-8">
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+      <a href="/art">Art</a>
+      <a href="/more">More</a>
+    </nav>
+  </div>
+</body>
+
+<script>
+  import { gsap } from "gsap";
+
+  let open = false;
+
+  //MENU
+  function initMenu() {
+    const menuBtn = document.getElementById("menu-btn");
+    const menuCircle = document.getElementById("menu-circle");
+    const menuPath = document.getElementById("menu-path");
+
+    const overlay = document.getElementById("menu-overlay");
+
+    if (!menuBtn || !overlay) return;
+
+    const navLinks = overlay.querySelectorAll("a");
+
+    gsap.set(overlay, {
+      clipPath: "circle(0% at top right)",
+      visibility: "hidden",
+    });
+
+    // CLOSE MENU AFTER LINK CLICK
+    navLinks.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const href = link.href;
+
+        open = false;
+        document.body.style.overflow = open ? "hidden" : "";
+        console.log(gsap.getProperty(overlay, "clipPath"));
+        gsap.to(overlay, {
+          clipPath: "circle(0% at top right)",
+          duration: 0.7,
+          ease: "power3.inOut",
+          onComplete: () => {
+            window.location.href = href;
+          },
+        });
+
+        gsap.to(menuBtn, {
+          rotate: 0,
+          duration: 0.3,
+        });
+
+        gsap.to(menuCircle, {
+          fill: "#FFFFFF",
+          duration: 0.3,
+          ease: "power2.out",
+        });
+      });
+    });
+
+    //MENU OPEN-CLOSE NORMAL
+    if (menuBtn.dataset.initialized) return;
+    menuBtn.dataset.initialized = "true";
+    menuBtn?.addEventListener("click", () => {
+      document.body.style.overflow = "hidden";
+      open = !open;
+      gsap.set(overlay, {
+        visibility: "visible",
+      });
+
+      if (open) {
+        gsap.set(overlay, { display: "flex" });
+
+        gsap.to(overlay, {
+          clipPath: "circle(150% at top right)",
+          duration: 0.7,
+          ease: "power3.inOut",
+        });
+
+        gsap.to(menuBtn, {
+          rotate: 135,
+          duration: 0.3,
+        });
+
+        gsap.to(menuCircle, {
+          fill: open ? "#ef4444" : "#FFFFFF",
+          duration: 0.3,
+          ease: "power2.out",
+        });
+      } else {
+        document.body.style.overflow = "";
+        gsap.to(overlay, {
+          clipPath: "circle(0% at top right)",
+          duration: 0.6,
+          ease: "power3.inOut",
+          onComplete: () => {
+            gsap.set(overlay, { visibility: "hidden" });
+          },
+        });
+
+        gsap.to(menuBtn, {
+          rotate: 0,
+          duration: 0.3,
+        });
+
+        gsap.to(menuCircle, {
+          fill: "#FFFFFF",
+          duration: 0.3,
+          ease: "power2.out",
+        });
+      }
+    });
+
+    // SCROLL
+    let lastScroll = window.scrollY;
+    let isHidden = false;
+
+    window.addEventListener("scroll", () => {
+      const currentScroll = window.scrollY;
+
+      // scrolling down → fly out
+      if (currentScroll > lastScroll && currentScroll > 50) {
+        if (!isHidden) {
+          isHidden = true;
+
+          gsap.to(menuBtn, {
+            x: 180, // right
+            y: -180, // up
+            duration: 0.5,
+            ease: "power3.inOut",
+          });
+        }
+      }
+
+      // scrolling up → float back
+      else {
+        if (isHidden) {
+          isHidden = false;
+
+          gsap.to(menuBtn, {
+            x: 0,
+            y: 0,
+            duration: 0.6,
+            ease: "power4.out",
+          });
+        }
+      }
+
+      lastScroll = currentScroll;
+    });
+  }
+  initMenu();
+  document.addEventListener("astro:page-load", () => {
+    initMenu();
+  });
+</script>

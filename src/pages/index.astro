@@ -1,8 +1,33 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Art from "../components/Art.astro";
+import Menu from "../components/Menu.astro";
+import Header from "../components/Header.astro";
 ---
 
 <Layout>
-  <Art />
+  <Header />
+  <Menu />
+
+  <!-- The outer wrapper adds side spacing (px-6) and centers everything -->
+  <div class="flex justify-center items-center w-full px-6 py-10">
+    <!-- Max-w-sm restricts the width so your squares don't become massive on desktop -->
+    <div class="grid grid-cols-1 gap-5 w-full max-w-sm [&p_:] text-white">
+      <!-- 'aspect-square' forces height to match width. Removed conflicting h-full styles. -->
+      <div
+        class="w-full aspect-square p-4 border-4 border-red-400 flex items-center justify-center"
+      >
+        <p>TEST</p>
+      </div>
+      <div
+        class="w-full aspect-square p-4 border-4 border-red-400 flex items-center justify-center"
+      >
+        <p>TEST</p>
+      </div>
+      <div
+        class="w-full aspect-square p-4 border-4 border-red-400 flex items-center justify-center"
+      >
+        <p>TEST</p>
+      </div>
+    </div>
+  </div>
 </Layout>
