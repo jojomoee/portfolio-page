@@ -1,6 +1,6 @@
 <div
   id="mesh-logo"
-  class="w-16 h-16 sm:w-10 sm:h-10 md:w-20 md:h-20 fixed top-0 mt-2 ml-1 z-40 pointer-events-none transition-[left] duration-500 ease-out"
+  class="w-48 h-16 sm:w-32 sm:h-10 md:w-64 md:h-20 fixed top-0 mt-2 ml-1 z-40 pointer-events-none transition-[left] duration-500 ease-out"
   style="left: var(--logo-x, 16px);"
 >
 </div>
@@ -21,7 +21,8 @@
     };
 
     p.draw = (): void => {
-      const containerSize = p.width;
+      const containerWidth = p.width;
+      const containerHeight = p.height;
 
       // 1. Reset blend mode to standard to cleanly clear the canvas frame
       p.blendMode(p.BLEND);
@@ -29,14 +30,12 @@
       // FIXED: Swapped background(0) for clear() to enable full HTML transparency
       p.clear();
 
-      p.translate(p.width / 2, p.height / 2);
-
       // --- MOVEMENT MATH ---
       let t1 = p.frameCount * 0.02;
       let t2 = p.frameCount * 0.015;
 
-      const driftRange = containerSize * 0.18;
-      let baseRadius = containerSize * 0.48;
+      const driftRange = containerHeight * 0.18;
+      let baseRadius = containerHeight * 0.35;
 
       let x1 = p.cos(t1) * driftRange;
       let y1 = p.sin(t1 * 1.3) * driftRange;
@@ -45,9 +44,8 @@
       let y2 = p.sin(t2 * 0.9) * driftRange;
 
       // --- PULSATING SIZE EFFECT ---
-      // Slower pulsation (0.02 instead of 0.05) and bigger range (0.6 to 1.4)
-      let pulse1 = 1.0 + 0.4 * p.sin(p.frameCount * 0.02);
-      let pulse2 = 1.0 + 0.4 * p.sin(p.frameCount * 0.02 + p.PI);
+      let pulse1 = 1.0 + 0.3 * p.sin(p.frameCount * 0.02);
+      let pulse2 = 1.0 + 0.3 * p.sin(p.frameCount * 0.02 + p.PI);
 
       let radius1 = baseRadius * pulse1;
       let radius2 = baseRadius * pulse2;
@@ -57,9 +55,37 @@
 
       p.fill("#F0F0F0");
 
-      // Draw shapes
-      p.circle(x1, y1, radius1);
-      p.circle(x2, y2, radius2);
+      // --- LEFT EYES ---
+      const leftEyeX = containerWidth * 0.15;
+      const eyeY = containerHeight * 0.5;
+      
+      p.circle(leftEyeX + x1, eyeY + y1, radius1);
+      p.circle(leftEyeX + x2, eyeY + y2, radius2);
+
+      // --- MOUTH (CENTER) ---
+      const mouthX = containerWidth * 0.5;
+      const mouthY = containerHeight * 0.5;
+      const mouthWidth = containerHeight * 0.3;
+      const mouthHeight = containerHeight * 0.25;
+
+      // Pulsating mouth
+      let mouthPulse = 1.0 + 0.2 * p.sin(p.frameCount * 0.02 + p.PI / 2);
+      let pulseWidth = mouthWidth * mouthPulse;
+      let pulseHeight = mouthHeight * mouthPulse;
+
+      // Draw smile/mouth arc
+      p.noFill();
+      p.strokeWeight(2);
+      p.stroke("#F0F0F0");
+      p.arc(mouthX, mouthY, pulseWidth, pulseHeight, 0, p.PI, p.OPEN);
+
+      // --- RIGHT EYES (mirrored) ---
+      const rightEyeX = containerWidth * 0.85;
+      
+      p.noStroke();
+      p.fill("#F0F0F0");
+      p.circle(rightEyeX - x1, eyeY + y1, radius1);
+      p.circle(rightEyeX - x2, eyeY + y2, radius2);
     };
 
     p.windowResized = (): void => {
