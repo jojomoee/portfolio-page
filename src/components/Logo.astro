@@ -62,22 +62,39 @@
       p.circle(leftEyeX + x1, eyeY + y1, radius1);
       p.circle(leftEyeX + x2, eyeY + y2, radius2);
 
-      // --- MOUTH (CENTER) ---
+      // --- MOUTH (CENTER) - TWO SINE WAVES ---
       const mouthX = containerWidth * 0.5;
       const mouthY = containerHeight * 0.5;
-      const mouthWidth = containerHeight * 0.3;
-      const mouthHeight = containerHeight * 0.25;
+      const mouthWidth = containerHeight * 0.25;
 
-      // Pulsating mouth
-      let mouthPulse = 1.0 + 0.2 * p.sin(p.frameCount * 0.02 + p.PI / 2);
-      let pulseWidth = mouthWidth * mouthPulse;
-      let pulseHeight = mouthHeight * mouthPulse;
+      // Animating amplitudes and maximums
+      let amp1 = containerHeight * 0.12 * (1.0 + 0.4 * p.sin(p.frameCount * 0.015));
+      let amp2 = containerHeight * 0.15 * (1.0 + 0.3 * p.sin(p.frameCount * 0.015 + p.PI / 3));
+      
+      let max1 = containerHeight * 0.08 * (1.0 + 0.5 * p.sin(p.frameCount * 0.012));
+      let max2 = containerHeight * 0.1 * (1.0 + 0.4 * p.sin(p.frameCount * 0.012 + p.PI / 2));
 
-      // Draw smile/mouth arc
       p.noFill();
       p.strokeWeight(2);
       p.stroke("#F0F0F0");
-      p.arc(mouthX, mouthY, pulseWidth, pulseHeight, 0, p.PI, p.OPEN);
+
+      // Draw first sine wave
+      p.beginShape();
+      for (let i = 0; i <= 1; i += 0.05) {
+        const x = mouthX - mouthWidth / 2 + i * mouthWidth;
+        const y = mouthY + max1 + p.sin(i * p.PI) * amp1;
+        p.vertex(x, y);
+      }
+      p.endShape();
+
+      // Draw second sine wave (offset phase)
+      p.beginShape();
+      for (let i = 0; i <= 1; i += 0.05) {
+        const x = mouthX - mouthWidth / 2 + i * mouthWidth;
+        const y = mouthY + max2 + p.sin(i * p.PI + p.PI / 4) * amp2;
+        p.vertex(x, y);
+      }
+      p.endShape();
 
       // --- RIGHT EYES (mirrored) ---
       const rightEyeX = containerWidth * 0.85;
