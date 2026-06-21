@@ -36,7 +36,7 @@
       let t2 = p.frameCount * 0.015;
 
       const driftRange = containerSize * 0.18;
-      const ballRadius = containerSize * 0.48;
+      let baseRadius = containerSize * 0.48;
 
       let x1 = p.cos(t1) * driftRange;
       let y1 = p.sin(t1 * 1.3) * driftRange;
@@ -44,14 +44,22 @@
       let x2 = p.cos(t2 + p.PI) * driftRange;
       let y2 = p.sin(t2 * 0.9) * driftRange;
 
+      // --- PULSATING SIZE EFFECT ---
+      // Create pulsating effect with different phase for each circle
+      let pulse1 = 0.8 + 0.2 * p.sin(p.frameCount * 0.05);
+      let pulse2 = 0.8 + 0.2 * p.sin(p.frameCount * 0.05 + p.PI);
+
+      let radius1 = baseRadius * pulse1;
+      let radius2 = baseRadius * pulse2;
+
       // 2. Turn on exclusion blending for the overlapping inversion
       p.blendMode(p.EXCLUSION);
 
       p.fill("#F0F0F0");
 
       // Draw shapes
-      p.circle(x1, y1, ballRadius);
-      p.circle(x2, y2, ballRadius);
+      p.circle(x1, y1, radius1);
+      p.circle(x2, y2, radius2);
     };
 
     p.windowResized = (): void => {
