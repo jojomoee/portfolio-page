@@ -1,33 +1,13 @@
-<div id="mesh-header" class="top-0 left-0 right-0 mt-2 h-20 sm:h-10 md:h-30">
+---
+import Logo from "./Logo.astro";
+import Menu from "./Menu.astro";
+---
+
+<Logo />
+<div
+  id="header"
+  class="relative flex justify-center items-center w-full min-h-16 mt-10 bg-black"
+>
 </div>
-<script>
-  import p5 from "p5";
 
-  new p5((p) => {
-    p.setup = () => {
-      const parent = document.getElementById("mesh-header");
-
-      if (!parent) return;
-
-      const canvas = p.createCanvas(parent.offsetWidth, parent.offsetHeight);
-
-      canvas.parent(parent);
-    };
-    p.draw = () => {
-      p.background(0);
-      p.stroke("#e74c3c");
-      p.noFill();
-
-      for (let y = 0; y < 10; y++) {
-        p.beginShape();
-        for (let x = 0; x < p.windowWidth; x++) {
-          const px = x * 20;
-          const py = y * 10 + p.sin(p.frameCount / 10 + y * 0.5) * 8;
-          p.vertex(px, py);
-        }
-
-        p.endShape();
-      }
-    };
-  });
-</script>
+<Menu />

@@ -1,33 +1,65 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Menu from "../components/Menu.astro";
 import Header from "../components/Header.astro";
+
+const gridItems = [
+  {
+    id: 1,
+    text: "PROJECT ONE",
+    desc: "24x12 cm marker",
+    imgSrc: "https://picsum.photos/600/900?random=1",
+  },
+  {
+    id: 2,
+    text: "PROJECT TWO",
+    desc: "24x12 cm marker ",
+    imgSrc: "https://picsum.photos/900/600?random=2",
+  },
+  {
+    id: 3,
+    text: "PROJECT THREE",
+    desc: "24x12 cm other",
+    imgSrc: "https://picsum.photos/800/800?random=3",
+  },
+  {
+    id: 4,
+    text: "PROJECT FOUR",
+    desc: "Classic Landscape Painting",
+    imgSrc: "https://picsum.photos/1200/500?random=4",
+  },
+];
 ---
 
 <Layout>
   <Header />
-  <Menu />
 
-  <!-- The outer wrapper adds side spacing (px-6) and centers everything -->
-  <div class="flex justify-center items-center w-full px-6 py-10">
-    <!-- Max-w-sm restricts the width so your squares don't become massive on desktop -->
-    <div class="grid grid-cols-1 gap-5 w-full max-w-sm [&p_:] text-white">
-      <!-- 'aspect-square' forces height to match width. Removed conflicting h-full styles. -->
-      <div
-        class="w-full aspect-square p-4 border-4 border-red-400 flex items-center justify-center"
-      >
-        <p>TEST</p>
-      </div>
-      <div
-        class="w-full aspect-square p-4 border-4 border-red-400 flex items-center justify-center"
-      >
-        <p>TEST</p>
-      </div>
-      <div
-        class="w-full aspect-square p-4 border-4 border-red-400 flex items-center justify-center"
-      >
-        <p>TEST</p>
-      </div>
+  <div class="flex justify-center items-center w-full px-6 py-2">
+    <div
+      id="portfolio-grid"
+      class="grid grid-cols-1 md:grid-cols-2 gap-5 w-full max-w-8xl text-white"
+    >
+      {
+        gridItems.map((item) => {
+          return (
+            <div class="portfolio-item w-full aspect-square border border-white/20 flex flex-col overflow-hidden bg-black transition-all duration-300">
+              <div class="flex-1 w-full flex items-center justify-center overflow-hidden bg-neutral-950/40">
+                <img
+                  src={item.imgSrc}
+                  alt={item.text}
+                  class="max-w-full max-h-full object-contain transition-transform duration-500 hover:scale-[1.02]"
+                />
+              </div>
+
+              <div class="w-full bg-black px-2 pb-2 shrink-0">
+                <h3 class="tracking-wide uppercase">{item.text}</h3>
+                <p class="text-xs text-neutral-400 mt-0.5 font-mono tracking-tight">
+                  {item.desc}
+                </p>
+              </div>
+            </div>
+          );
+        })
+      }
     </div>
   </div>
 </Layout>
