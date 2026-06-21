@@ -1,6 +1,6 @@
 <div
   id="mesh-logo"
-  class="w-48 h-16 sm:w-32 sm:h-10 md:w-64 md:h-20 fixed top-0 mt-2 ml-1 z-40 pointer-events-none transition-[left] duration-500 ease-out"
+  class="w-32 h-16 sm:w-32 sm:h-10 md:w-64 md:h-20 fixed top-0 mt-2 ml-1 z-40 pointer-events-none transition-[left] duration-500 ease-out"
   style="left: var(--logo-x, 16px);"
 >
 </div>
@@ -56,15 +56,15 @@
       p.fill("#F0F0F0");
 
       // --- LEFT EYES (closer together) ---
-      const leftEyeX = containerWidth * 0.35;
+      const leftEyeX = containerWidth * 0.25;
       const eyeY = containerHeight * 0.5;
-      
+
       p.circle(leftEyeX + x1, eyeY + y1, radius1);
       p.circle(leftEyeX + x2, eyeY + y2, radius2);
 
       // --- RIGHT EYES (closer together, same movement) ---
-      const rightEyeX = containerWidth * 0.65;
-      
+      const rightEyeX = containerWidth * 0.45;
+
       p.circle(rightEyeX + x1, eyeY + y1, radius1);
       p.circle(rightEyeX + x2, eyeY + y2, radius2);
     };
