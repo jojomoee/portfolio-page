@@ -45,9 +45,9 @@
       let y2 = p.sin(t2 * 0.9) * driftRange;
 
       // --- PULSATING SIZE EFFECT ---
-      // Create pulsating effect with different phase for each circle
-      let pulse1 = 0.8 + 0.2 * p.sin(p.frameCount * 0.05);
-      let pulse2 = 0.8 + 0.2 * p.sin(p.frameCount * 0.05 + p.PI);
+      // Slower pulsation (0.02 instead of 0.05) and bigger range (0.6 to 1.4)
+      let pulse1 = 1.0 + 0.4 * p.sin(p.frameCount * 0.02);
+      let pulse2 = 1.0 + 0.4 * p.sin(p.frameCount * 0.02 + p.PI);
 
       let radius1 = baseRadius * pulse1;
       let radius2 = baseRadius * pulse2;
