@@ -55,52 +55,16 @@
 
       p.fill("#F0F0F0");
 
-      // --- LEFT EYES ---
-      const leftEyeX = containerWidth * 0.15;
+      // --- LEFT EYES (closer together) ---
+      const leftEyeX = containerWidth * 0.35;
       const eyeY = containerHeight * 0.5;
       
       p.circle(leftEyeX + x1, eyeY + y1, radius1);
       p.circle(leftEyeX + x2, eyeY + y2, radius2);
 
-      // --- MOUTH (CENTER) - TWO SINE WAVES ---
-      const mouthX = containerWidth * 0.5;
-      const mouthY = containerHeight * 0.65;
-      const mouthWidth = containerHeight * 0.5;
-
-      // Animating amplitudes and maximums
-      let amp1 = containerHeight * 0.2 * (1.0 + 0.4 * p.sin(p.frameCount * 0.015));
-      let amp2 = containerHeight * 0.25 * (1.0 + 0.3 * p.sin(p.frameCount * 0.015 + p.PI / 3));
+      // --- RIGHT EYES (closer together, same movement) ---
+      const rightEyeX = containerWidth * 0.65;
       
-      let max1 = containerHeight * 0.12 * (1.0 + 0.5 * p.sin(p.frameCount * 0.012));
-      let max2 = containerHeight * 0.15 * (1.0 + 0.4 * p.sin(p.frameCount * 0.012 + p.PI / 2));
-
-      p.noFill();
-      p.strokeWeight(6);
-      p.stroke("#F0F0F0");
-
-      // Draw first sine wave
-      p.beginShape();
-      for (let i = 0; i <= 1; i += 0.05) {
-        const x = mouthX - mouthWidth / 2 + i * mouthWidth;
-        const y = mouthY + max1 + p.sin(i * p.PI) * amp1;
-        p.vertex(x, y);
-      }
-      p.endShape();
-
-      // Draw second sine wave (offset phase)
-      p.beginShape();
-      for (let i = 0; i <= 1; i += 0.05) {
-        const x = mouthX - mouthWidth / 2 + i * mouthWidth;
-        const y = mouthY + max2 + p.sin(i * p.PI + p.PI / 4) * amp2;
-        p.vertex(x, y);
-      }
-      p.endShape();
-
-      // --- RIGHT EYES (NOT mirrored - same movement as left) ---
-      const rightEyeX = containerWidth * 0.85;
-      
-      p.noStroke();
-      p.fill("#F0F0F0");
       p.circle(rightEyeX + x1, eyeY + y1, radius1);
       p.circle(rightEyeX + x2, eyeY + y2, radius2);
     };
