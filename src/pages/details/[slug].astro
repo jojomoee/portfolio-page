@@ -1,0 +1,68 @@
+---
+// src/pages/details/[slug].astro
+import Layout from "../../layouts/Layout.astro"; // Import your default layout
+
+export async function getStaticPaths() {
+  const gridItems = [
+    {
+      id: 1,
+      text: "PROJECT ONE",
+      slug: "project-one",
+      desc: "24x12 cm marker",
+    },
+    {
+      id: 2,
+      text: "PROJECT TWO",
+      slug: "project-two",
+      desc: "24x12 cm marker ",
+    },
+    {
+      id: 3,
+      text: "PROJECT THREE",
+      slug: "project-three",
+      desc: "24x12 cm other",
+    },
+    {
+      id: 4,
+      text: "PROJECT FOUR",
+      slug: "project-four",
+      desc: "Classic Landscape Painting",
+    },
+  ];
+
+  return gridItems.map((item) => ({
+    params: { slug: item.slug },
+    props: { item },
+  }));
+}
+
+const { item } = Astro.props;
+---
+
+<!-- Wrap everything in your Layout component -->
+<Layout title={item.text}>
+  <main class="max-w-4xl mx-auto p-8 text-white">
+    <a
+      href="/"
+      class="text-neutral-400 hover:text-white mb-8 inline-block text-sm font-mono"
+    >
+      ← Back to Gallery
+    </a>
+
+    <h1 class="text-5xl font-bold tracking-tight mb-2 uppercase">
+      {item.text}
+    </h1>
+    <p class="text-xs text-neutral-400 mb-8 font-mono tracking-tight">
+      {item.desc}
+    </p>
+
+    <div
+      class="w-full aspect-video border border-white/20 bg-neutral-950/40 flex items-center justify-center overflow-hidden"
+    >
+      <!-- Your detail page content or large project image goes here -->
+      <span class="text-neutral-500 font-mono text-sm"
+        >Project Content Workspace</span
+      >
+    </div>
+  </main>
+</Layout>

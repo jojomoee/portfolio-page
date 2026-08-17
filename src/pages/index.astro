@@ -1,31 +1,38 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
-
 const gridItems = [
   {
     id: 1,
     text: "PROJECT ONE",
     desc: "24x12 cm marker",
-    //   imgSrc: "https://picsum.photos/600/900?random=1",
+    slug: "project-one",
+    imgSrc:
+      "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=600&h=900&fit=crop",
   },
   {
     id: 2,
     text: "PROJECT TWO",
     desc: "24x12 cm marker ",
-    //imgSrc: "https://picsum.photos/900/600?random=2",
+    slug: "project-two",
+    imgSrc:
+      "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=900&h=600&fit=crop",
   },
   {
     id: 3,
     text: "PROJECT THREE",
     desc: "24x12 cm other",
-    //imgSrc: "https://picsum.photos/800/800?random=3",
+    slug: "project-three",
+    imgSrc:
+      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=800&fit=crop",
   },
   {
     id: 4,
     text: "PROJECT FOUR",
     desc: "Classic Landscape Painting",
-    //imgSrc: "https://picsum.photos/1200/500?random=4",
+    slug: "project-four",
+    imgSrc:
+      "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1200&h=500&fit=crop",
   },
 ];
 ---
@@ -41,7 +48,11 @@ const gridItems = [
       {
         gridItems.map((item) => {
           return (
-            <div class="portfolio-item w-full aspect-square border border-white/20 flex flex-col overflow-hidden bg-black transition-all duration-300">
+            /* Changed outer `div` to an `a` tag and added dynamic href */
+            <a
+              href={`/details/${item.slug}`}
+              class="portfolio-item block w-full aspect-square border border-white/20 flex flex-col overflow-hidden bg-black transition-all duration-300 hover:border-white/50"
+            >
               <div class="flex-1 w-full flex items-center justify-center overflow-hidden bg-neutral-950/40">
                 <img
                   src={item.imgSrc}
@@ -56,7 +67,7 @@ const gridItems = [
                   {item.desc}
                 </p>
               </div>
-            </div>
+            </a>
           );
         })
       }
