@@ -1,6 +1,6 @@
 ---
 // src/pages/details/[slug].astro
-import Layout from "../../layouts/Layout.astro"; // Import your default layout
+import Layout from "../../layouts/Layout.astro";
 
 export async function getStaticPaths() {
   const gridItems = [
@@ -39,30 +39,52 @@ export async function getStaticPaths() {
 const { item } = Astro.props;
 ---
 
-<!-- Wrap everything in your Layout component -->
 <Layout title={item.text}>
-  <main class="max-w-4xl mx-auto p-8 text-white">
-    <a
-      href="/"
-      class="text-neutral-400 hover:text-white mb-8 inline-block text-sm font-mono"
-    >
-      ← Back to Gallery
-    </a>
+  <!-- Fixed Back Button -->
+  <a
+    aria-label="back-button"
+    href="/"
+    class="w-16 h-16 md:w-20 md:h-20 bg-contain bg-no-repeat bg-center cursor-pointer fixed left-6 top-6 z-50"
+  >
+    <svg viewBox="0 0 76 75" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M75 37.5C75 58.2107 58.2107 75 37.5 75C16.7893 75 -1.23486e-07 58.2107 0 37.5C1.23486e-07 16.7893 16.7893 -1.23486e-07 37.5 0C58.2107 1.23486e-07 75 16.7893 75 37.5Z"
+        fill="#E7E7E7"></path>
+      <path
+        d="M30.0126 15.862C28.8936 16.9732 28.8725 18.8111 29.9915 19.9224L36.1853 26.265L36.2486 26.3292C36.2697 31.7787 39.7956 36.2025 44.1238 36.2025V37.442C39.1411 37.442 35.0874 32.5053 35.024 26.4146L30.9281 26.436C30.9281 26.436 10.2397 26.265 10.2185 26.265C8.99398 26.4146 8.04389 27.4618 8.04389 28.7654C8.04389 30.1545 9.16289 31.2658 10.5141 31.2658C10.5564 31.2658 28.5634 31.4582 28.5634 31.4582L28.6056 32.5694L22.5117 32.5908C21.1393 32.5908 20.0414 33.7235 20.0414 35.1126C20.0414 36.5017 21.1604 37.6129 22.5328 37.6129L28.5845 37.613V38.8097H22.8285C21.4562 38.8097 20.3583 39.9424 20.3583 41.3315C20.3583 42.7206 21.4773 43.8319 22.8285 43.8319L28.5845 43.8105V44.9218L25.5329 44.9218C24.1606 44.9218 23.0627 46.0544 23.0627 47.4435C23.0627 48.8326 24.1817 49.9439 25.554 49.9439C48.4407 49.9439 44.2716 49.9225 44.8205 49.9225C47.6075 49.9225 49.9722 48.4693 50.7533 46.4605L74 48C74 48 75.5 44.613 75.5 37.5C75.5 30.387 74.5 29.0646 74.5 29.0646H50.1833C49.9933 28.5304 49.761 27.9747 49.4866 27.4404C47.8186 24.1493 45.2006 21.8627 42.6248 21.1361C41.7169 20.5163 33.3485 15.3491 33.3485 15.3491C32.3773 14.7507 30.9416 14.9216 30.0126 15.862Z"
+        fill="black"></path>
+    </svg>
+  </a>
 
-    <h1 class="text-5xl font-bold tracking-tight mb-2 uppercase">
-      {item.text}
-    </h1>
-    <p class="text-xs text-neutral-400 mb-8 font-mono tracking-tight">
-      {item.desc}
-    </p>
-
+  <!-- Haupt-Container skaliert auf die volle Bildschirmhöhe -->
+  <main
+    class="w-full min-h-screen p-4 md:p-8 text-white flex items-center justify-center pt-20 mt-8"
+  >
     <div
-      class="w-full aspect-video border border-white/20 bg-neutral-950/40 flex items-center justify-center overflow-hidden"
+      class="flex flex-col md:flex-row gap-6 md:gap-12 w-full h-full max-w-[1800px] items-stretch"
     >
-      <!-- Your detail page content or large project image goes here -->
-      <span class="text-neutral-500 font-mono text-sm"
-        >Project Content Workspace</span
+      <!-- BILD: Nimmt auf Mobile den Großteil der Höhe ein, auf Desktop die linke Hälfte -->
+      <div
+        class="w-full md:w-2/3 h-[60vh] md:h-[85vh] border border-white/20 bg-neutral-950/40 flex items-center justify-center overflow-hidden shrink-0"
       >
+        <span class="text-neutral-500 font-mono text-sm"
+          >Project Content Workspace</span
+        >
+      </div>
+
+      <!-- BESCHREIBUNG: Auf Mobile unten angesiedelt, auf Desktop rechts zentriert -->
+      <div class="w-full md:w-1/3 flex flex-col justify-center text-left py-4">
+        <h1
+          class="text-3xl md:text-5xl font-bold mb-4 tracking-wide uppercase leading-tight"
+        >
+          {item.text}
+        </h1>
+        <p
+          class="text-sm md:text-base text-neutral-400 font-mono tracking-tight"
+        >
+          {item.desc}
+        </p>
+      </div>
     </div>
   </main>
 </Layout>

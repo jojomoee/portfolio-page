@@ -2,6 +2,7 @@
 import "@fontsource-variable/inter";
 import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
+import Menu from "../components/Menu.astro";
 ---
 
 <!doctype html>
@@ -12,6 +13,7 @@ import { ClientRouter } from "astro:transitions";
     <title>Art: Johannes Moehrl</title>
   </head>
   <body class="m-0 w-screen h-screen bg-black">
+    <Menu />
     <ClientRouter />
     <slot />
   </body>
